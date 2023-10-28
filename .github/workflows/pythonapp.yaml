@@ -9,7 +9,7 @@ env:
     AZURE_CONTAINER_REGISTRY: automateddeployments
     CLUSTER_NAME: myDemoCluster
     CLUSTER_RESOURCE_GROUP: myAKSDemo
-    CONTAINER_NAME: pythonapp
+    CONTAINER_NAME: flaskapp
     DEPLOYMENT_MANIFEST_PATH: |
         manifests/deployment.yaml
         manifests/service.yaml
