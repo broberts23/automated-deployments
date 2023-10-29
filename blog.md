@@ -51,7 +51,7 @@ After you've authenticated with GitHub, select the repository you want to use fo
 
 ![Alt text](image-1.png)
 
-The wizard will automatically detect environment runtime. Fill in the port and location for the app. This repo contains three apps so we'll seperate them by using different workflows.
+The wizard will automatically detect environment runtime. Fill in the port and location for the app.
 
 Don't forget to select the repo created above at the bottom of the page.
 
@@ -67,9 +67,15 @@ and click Deploy.
 
 The automated deployment will now generate the credentials and set up permissions between GitHub Actions, ACR and the AKS cluster.
 
-Before approving the deployment, we need to make a small change to the automatically generated Dockerfile. Cope/paste the existing Dockerfile from src/app/2.0/Dockerfile to the Dockerfile in the pull request.
+The automated deployment will also create a pull request contain the new Dockerfile, GitHub Actions workflow and Kubernetes (yaml) manifest.
+
+Clicking on "Approve pull request" will open the pull request in GitHub in a new tab.
 
 ![Alt text](image-5.png)
 
-Approve the merge and delete the branch.
+Approve the merge and delete the branch then head to Action to see the build process.
+
+![Alt text](image-6.png)
+
+The pipeline will build the Docker image, push it to ACR and deploy it to AKS.
 
