@@ -78,4 +78,14 @@ Approve the merge and delete the branch then head to Action to see the build pro
 ![Alt text](image-6.png)
 
 The pipeline will build the Docker image, push it to ACR and deploy it to AKS.
+After a few minites the deployment will be complete and the job status from the GitHub Actions pipeline will be reflected under the Automated Deployments tab in the Azure Portal.
 
+![Alt text](image-7.png)
+
+You can start to see how you might scale this out by adding more apps in different repo and/or branches
+
+## Clean up resources
+
+When no longer needed, you can use the following command to remove the resource group, AKS cluster, and all related resources.
+
+```bash
