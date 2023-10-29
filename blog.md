@@ -84,7 +84,15 @@ After a few minites the deployment will be complete and the job status from the 
 
 You can start to see how you might scale this out by adding more apps in different repo and/or branches.
 
-Head up to Services and ingress to get the public IP address of the app.
+Head up to "Services and ingress" to get the public IP address of the app.
+
+![Alt text](image-8.png)
+
+Clicking on the external IP will open a tab with the app.
+
+![Alt text](image-9.png)
+
+Success! You've successfully deployed an application to AKS using automated deployments.
 
 
 ## Clean up resources
