@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: pythonapp
-          image: automateddeployments.azurecr.io/flaskapp:latest
+          image: automateddeployments.azurecr.io/pythonapp:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 5000
