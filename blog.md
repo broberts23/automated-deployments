@@ -37,9 +37,28 @@ az acr create --resource-group myAKSDemo --name automateddeployments --sku Basic
 
 ## Create a GitHub repository
 
-For this demo I'll be using the [AKS Voting App](https://github.com/azure-samples/aks-voting-app/tree/master/) sample application. Start by forking the repo to your own GitHub account.
+For this demo we'll be using a (very) basic Flask app. Create a folder in the repo called "src" and a files named app.py and requirements.txt inside.
 
-After the repo has been forked and all the Azure resources have been deployed, head over to the Azure Portal to complete the setup.
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def hello_world():
+    return "<h1>Hello World 2.0</h1>"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+```
+
+```txt
+Flask==2.3.3
+```
+
+Once you've commit those changes to your main branch we can move on to automated deployments configuration.
 
 ## Configure Automated Deployments
 
@@ -65,9 +84,9 @@ and click Deploy.
 
 ![Alt text](image-4.png)
 
-The automated deployment will now generate the credentials and set up permissions between GitHub Actions, ACR and the AKS cluster.
+The automated deployment will now generate the credentials and set up permissions between GitHub Actions, the Container Registry and the AKS cluster.
 
-The automated deployment will also create a pull request contain the new Dockerfile, GitHub Actions workflow and Kubernetes (yaml) manifest.
+The automated deployment will also create a pull request containing the new Dockerfile, GitHub Actions workflow and Kubernetes (yaml) manifest.
 
 Clicking on "Approve pull request" will open the pull request in GitHub in a new tab.
 
@@ -137,7 +156,7 @@ git push --set-upstream origin feature/website-update
 
 ![Alt text](image-10.png)
 
-After completing the merge request observe the GitHub Actions pipeline.
+After completing the merge, observe the GitHub Actions pipeline.
 
 ![Alt text](image-11.png)
 
@@ -145,12 +164,40 @@ and the Azure Portal.
 
 ![Alt text](image-12.png)
 
-After the build is complete, refresh the tab with the app to see the changes.
+After the build is complete, refresh the tab with the app to see the changes. 🪄
 
 ![Alt text](image-13.png)
+
+## All dressed up and nowhere to go
+
+During the process of writing this blog I tried three times to get the automated deployment to work:
+
+- The first time I used a Python app that I hadn't tested as a container,
+- The second time I used a Node app that I had used on AKS before and,
+- The third time I used a Go app that I had used with Docker.
+
+Each time I ran into the same issue: the automated deployment process failed to generate a usable Dockerfile. So I had to troubleshoot the issue with Docker locally before I could move on. At this point you're probably wondering, "What's the point?" 🤔 Well... you're not alone.
+
+Automated deployments completes the following four tasks:
+    - Generates a Dockerfile
+    - Generates a GitHub Actions (yaml) pipeline
+    - Generates two Kubernetes manifest
+    - Authenticates with GitHub Actions, ACR and AKS
+
+Nothing "new" is being introduced here. I'd argue you could complete the same task with ChatGPT and a spare 30 minutes.
+
+Given that you can't just "conainerize anything" there's a pretty good chance you're going to have to write your own Dockerfile and troubleshoot. If you're writing your own Dockerfile, you're probably going to want to write your own GitHub Actions pipeline. If you're writing your own GitHub Actions pipeline, you're probably going to want to write your own Kubernetes manifest. If you're writing your own Kubernetes manifest, you're probably going to want to authenticate with GitHub Actions, ACR and AKS. If you're writing... you get the point.
+
+I havn't even addressed the issue of DevSecOps and the lack of any security scanning in the pipeline.
+
+## Conclusion
+
+Automated Deployments feels like a solution looking for a problem. It's a great idea and the automation to generate the verious files and pull request integration works really well but it feels a bit... lost. I'd love to see this feature get some love and attention from the product team. The wizard needs integration with an ingress controller to make it more then just a pod running on a cluster for a start. But at that point I can't help wonder if it's just easier to use Container Apps? 🤷
 
 ## Clean up resources
 
 When no longer needed, you can use the following command to remove the resource group, AKS cluster, and all related resources.
 
 ```bash
+az group delete --name myAKSDemo --yes --no-wait
+```
