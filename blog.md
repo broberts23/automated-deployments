@@ -73,6 +73,12 @@ Clicking on "Approve pull request" will open the pull request in GitHub in a new
 
 ![Alt text](image-5.png)
 
+Note: Azure auto-generated entrypoint/cmd won't work, update the Dockerfile to use the following instead.
+
+```dockerfile
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+```
+
 Approve the merge and delete the branch then head to Action to see the build process.
 
 ![Alt text](image-6.png)
@@ -92,8 +98,56 @@ Clicking on the external IP will open a tab with the app.
 
 ![Alt text](image-9.png)
 
-Success! You've successfully deployed an application to AKS using automated deployments.
+Success! 🤜🤛 You've deployed an application to AKS using without any knowledge of Kubernetes or Docker!
 
+## Automated Deployments
+
+Now that we've got the basic configuration in place, let's take a look at how automated deployments work.
+
+This is best explained by modifying the code in the GitHub repo and seeing how the automated deployment process works.
+
+Make a change to app.py and commit the changes to a new branch and create a pull request.
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def hello_world():
+    return "<h1>Hello World 2.0</h1>"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+```
+
+```bash
+git checkout -b feature/website-update
+```
+
+```bash
+git commit -am "added things"
+```
+
+```bash
+git push --set-upstream origin feature/website-update
+```
+
+![Alt text](image-10.png)
+
+After completing the merge request observe the GitHub Actions pipeline.
+
+![Alt text](image-11.png)
+
+and the Azure Portal.
+
+![Alt text](image-12.png)
+
+After the build is complete, refresh the tab with the app to see the changes.
+
+![Alt text](image-13.png)
 
 ## Clean up resources
 
