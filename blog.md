@@ -82,7 +82,10 @@ After a few minites the deployment will be complete and the job status from the 
 
 ![Alt text](image-7.png)
 
-You can start to see how you might scale this out by adding more apps in different repo and/or branches
+You can start to see how you might scale this out by adding more apps in different repo and/or branches.
+
+Head up to Services and ingress to get the public IP address of the app.
+
 
 ## Clean up resources
 
