@@ -17,6 +17,12 @@ With automated deployments, you can:
 
 With automated deployments in AKS, you can streamline your deployment process and focus on what really matters: building great applications.
 
+Automated deployments completes the following four tasks:
+    - Generates a Dockerfile
+    - Generates a GitHub Actions (yaml) pipeline
+    - Generates two Kubernetes manifest
+    - Authenticates with GitHub Actions, ACR and AKS
+
 ## Prerequisites
 
 To complete this tutorial, you need:
@@ -168,35 +174,25 @@ After the build is complete, refresh the tab with the app to see the changes. �
 
 ![Alt text](image-13.png)
 
-## All dressed up and nowhere to go
+## Not without it's flaws
 
 During the process of writing this blog I tried three times to get the automated deployment to work:
 
 - The first time I used a Python app that I hadn't tested as a container,
 - The second time I used a Node app that I had used on AKS before and,
-- The third time I used a Go app that I had used with Docker.
+- The third time I used a Go app that I had used with Docker locally.
 
-Each time I ran into the same issue: the automated deployment process failed to generate a usable Dockerfile. So I had to troubleshoot the issue with Docker locally before I could move on. At this point you're probably wondering, "What's the point?" 🤔 Well... you're not alone.
-
-Automated deployments completes the following four tasks:
-    - Generates a Dockerfile
-    - Generates a GitHub Actions (yaml) pipeline
-    - Generates two Kubernetes manifest
-    - Authenticates with GitHub Actions, ACR and AKS
-
-Nothing "new" is being introduced here. I'd argue you could complete the same task with ChatGPT and a spare 30 minutes.
-
-Given that you can't just "conainerize anything" there's a pretty good chance you're going to have to write your own Dockerfile and troubleshoot. If you're writing your own Dockerfile, you're probably going to want to write your own GitHub Actions pipeline. If you're writing your own GitHub Actions pipeline, you're probably going to want to write your own Kubernetes manifest. If you're writing your own Kubernetes manifest, you're probably going to want to authenticate with GitHub Actions, ACR and AKS. If you're writing... you get the point.
-
-I havn't even addressed the issue of DevSecOps and the lack of any security scanning in the pipeline.
+Each time I ran into the same issue: the automated deployment process failed to generate a usable Dockerfile. So I had to troubleshoot the issue with Docker locally before I could move on.
 
 ## Conclusion
 
-Automated Deployments feels like a solution looking for a problem. It's a great idea and the automation to generate the verious files and pull request integration works really well but it feels a bit... lost. I'd love to see this feature get some love and attention from the product team. The wizard needs integration with an ingress controller to make it more then just a pod running on a cluster for a start. But at that point I can't help wonder if it's just easier to use Container Apps? 🤷
+Automated Deployments is a fantastic solution for abstracting away the complexities of Kubernetes. All you need is a basic understanding of Docker and you'll be have apps running on AKS in no time. I think it's a great idea and the automation to generate the verious files and pull request integration works really well but it feels a bit... incomplete. I'd love to see this feature get some love and attention from the product team. The wizard needs integration with an ingress controller to make it more then just a pod running on a cluster for a start. I also can't help but wonder if this could be better utilised with Container Apps? 🤷
+
+As always, thanks for reading and happy coding! 🤘
 
 ## Clean up resources
 
-When no longer needed, you can use the following command to remove the resource group, AKS cluster, and all related resources.
+When you're ready to delete your resources, you can use the following command to remove the resource group, AKS cluster, and all related resources.
 
 ```bash
 az group delete --name myAKSDemo --yes --no-wait
